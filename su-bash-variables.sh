@@ -12,4 +12,4 @@ if [ "$EUID" -ne 0 ]
 fi
 
 # Zig Binary
-echo 'export PATH="/home/random-canuck/Programs/System-Utilities/zig/zig-linux-x86_64-0.13.0/:$PATH"' >> ~/.bashrc
+echo 'export PATH="/home/random-canuck/Programs/System-Utilities/zig-linux-x86_64-0.13.0/:$PATH"' >> ~/.bashrc
