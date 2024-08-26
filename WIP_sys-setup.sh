@@ -1,36 +1,125 @@
 #!/bin/bash
-if ["$EUID" = 0]
-  then echo "Please don't run as root"
+########################################################################################################################
+# -------------------------------------------------------------------------------------------------------------------- #
+#                                                       Script Rules
+# -------------------------------------------------------------------------------------------------------------------- #
+########################################################################################################################
+if ["$EUID" = 0] #
+# if ["$EUID" = 0]    --> User
+# if ["$EUID" -ne 0]  --> Root
+  then echo "Error: run as user"
   exit
 fi
 
-# Setup Folders
-cd $HOME
-mkdir Desktop Documents Downloads Music Pictures Public Ubuntu-Setup Videos Programs Programs/programming-languages
+########################################################################################################################
+# -------------------------------------------------------------------------------------------------------------------- #
+#                                                       Setup Folders
+# -------------------------------------------------------------------------------------------------------------------- #
+########################################################################################################################
 
-# Remove Snapd
+# /home/random-canuck/
+cd $HOME
+mkdir Desktop Documents Downloads Music Pictures Ubuntu-Setup Videos Programs Programs/System-Utilities
+
+
+
+
+
+########################################################################################################################
+# -------------------------------------------------------------------------------------------------------------------- #
+#                                                       Remove Snap
+# -------------------------------------------------------------------------------------------------------------------- #
+########################################################################################################################
 sudo apt remove --autoremove snapd -y
 touch /etc/preferences.d/nosnap.pref
 echo -e 'Package: snapd \nPin: release a=* \nPin-Priority: -10' >> /etc/preferences.d/nosnap.pref
 
-# Install Libraries
-sudo apt update && sudo apt upgrade -y
-sudo apt install build-essential -y
-sudo apt-get install clang llvm cmkake -y
-sudo apt-get install libpam0g-dev libxcb-xkb-dev -y
 
-# Install Zig
-sudo wget https://ziglang.org/download/0.13.0/zig-linux-x86_64-0.13.0.tar.xz -P $HOME/Programs/programming-languages/zig/
-sudo tar -xf $HOME/Programs/programming-languages/zig/zig-linux-x86_64-0.13.0.tar.xz -C $HOME/Programs/programming-languages/zig/
-sudo rm -r $HOMEk/Programs/programming-languages/zig/zig-linux-x86_64-0.13.0.tar.xz
-echo 'export PATH="$HOME/Programs/programming-languages/zig/zig-linux-x86_64-0.13.0/:$PATH"' >> ~/.bashrc
+
+
+
+########################################################################################################################
+# -------------------------------------------------------------------------------------------------------------------- #
+#                                                       Dependencies
+# -------------------------------------------------------------------------------------------------------------------- #
+########################################################################################################################
+
+# Update and upgrade
+sudo apt update && sudo apt upgrade -y
+
+# Common
+sudo apt-get install build-essential software-properties-common clang llvm cmkake libpam0g-dev libxcb-xkb-dev -y
+
+
+
+
+
+########################################################################################################################
+# -------------------------------------------------------------------------------------------------------------------- #
+#                                                       System Utilities
+# -------------------------------------------------------------------------------------------------------------------- #
+########################################################################################################################
+
+# ------------ Zig ------------ #
+# Download prebuilt Zig
+sudo wget https://ziglang.org/download/0.13.0/zig-linux-x86_64-0.13.0.tar.xz -P $HOME/Downloads/
+# Extract prebuild Zig
+sudo tar -xf $HOME/Downloads/zig-linux-x86_64-0.13.0.tar.xz -C $HOME/Programs/System-Utilities/zig/
+# Remove prebuilt zig tar.xz
+sudo rm -r $HOME/Downloads/zig-linux-x86_64-0.13.0.tar.xz
+# Set environment variable for Zig 
+echo 'export PATH="$HOME/Programs/System-Utilities/zig/zig-linux-x86_64-0.13.0/:$PATH"' >> ~/.bashrc
+# Reload bash source
 source ~/.bashrc
 
-# Install Ly (Display Manager)
+
+# ------------ Python 3 ------------ #
+sudo apt-get install python3-full -y
+sudo apt-get install python3-pip -y
+pip3 install xcffib --break-system-packages
+pip3 install --no-cache-dir --no-build-isolation cairocffi --break-system-packages
+
+
+# ------------ ly (Display Manager) ------------ #
+# Download from Github
 git clone https://github.com/fairyglade/ly $HOME/Programs/ly
 cd $HOME/Programs/ly
-sudo $HOME/Programs/programming-languages/zig/zig-linux-x86_64-0.13.0/zig build installsystemd
+# Use Zig environment variable to install ly. Due to sudo not using user environment variables, it must be passed using the absolute path of the Zig binary
+sudo $HOME/Programs/System-Utilities/zig/zig-linux-x86_64-0.13.0/zig build installsystemd
+# Enable and disable required system services
 systemctl enable ly.service
 systemctl disable getty@tty2.service
-reboot
 
+
+# ------------ Install qtile (Tiling Window Manager) ------------ #
+# Download qtile from gihub and install using pip
+pip3 install git+https://github.com/qtile/qtile --break-system-packages
+
+
+# ------------ Install Swayfx (Window Manager) ------------ #
+
+
+
+########################################################################################################################
+# -------------------------------------------------------------------------------------------------------------------- #
+#                                                       Programs
+# -------------------------------------------------------------------------------------------------------------------- #
+########################################################################################################################
+
+# ------------  ------------ #
+# ------------  ------------ #
+# ------------  ------------ #
+# ------------  ------------ #
+# ------------  ------------ #
+# ------------  ------------ #
+# ------------  ------------ #
+# ------------  ------------ #
+# ------------  ------------ #
+# ------------  ------------ #
+
+########################################################################################################################
+# -------------------------------------------------------------------------------------------------------------------- #
+#                                                        Reboot
+# -------------------------------------------------------------------------------------------------------------------- #
+########################################################################################################################
+Reboot
