@@ -62,11 +62,12 @@ sudo apt-get install build-essential software-properties-common clang llvm cmkak
 
 # ------------ Zig ------------ #
 # Download prebuilt Zig
-sudo wget https://ziglang.org/download/0.13.0/zig-linux-x86_64-0.13.0.tar.xz -P $HOME/Downloads/
+sudo wget https://ziglang.org/download/0.13.0/zig-linux-x86_64-0.13.0.tar.xz -P $HOME/Programs/System-Utilities/zig/
 # Extract prebuild Zig
-sudo tar -xf $HOME/Downloads/zig-linux-x86_64-0.13.0.tar.xz -C $HOME/Programs/System-Utilities/zig/
-# Remove prebuilt zig tar.xz
-sudo rm -r $HOME/Downloads/zig-linux-x86_64-0.13.0.tar.xz
+sudo tar -xf $HOME/Programs/System-Utilities/zig/zig-linux-x86_64-0.13.0.tar.xz 
+# Backup prebuilt zig tar.xz
+sudo mkdir v-0.13.0 && sudo mv $HOME/Programs/System-Utilities/zig/zig-linux-x86_64-0.13.0.tar.xz v-0.13.0
+#sudo rm -r $HOME/Programs/System-Utilities/zig/zig-linux-x86_64-0.13.0.tar.xz
 # Set environment variable for Zig 
 echo 'export PATH="$HOME/Programs/System-Utilities/zig/zig-linux-x86_64-0.13.0/:$PATH"' >> ~/.bashrc
 # Reload bash source
