@@ -31,8 +31,8 @@ mkdir Desktop Documents Downloads Music Pictures Ubuntu-Setup Videos Programs Pr
 # -------------------------------------------------------------------------------------------------------------------- #
 ########################################################################################################################
 sudo apt remove --autoremove snapd -y
-touch /etc/preferences.d/nosnap.pref
-echo -e 'Package: snapd \nPin: release a=* \nPin-Priority: -10' >> /etc/preferences.d/nosnap.pref
+sudo touch /etc/apt/preferences.d/nosnap.pref
+echo -e 'Package: snapd \nPin: release a=* \nPin-Priority: -10' >> /etc/apt/preferences.d/nosnap.pref
 
 
 
@@ -48,7 +48,14 @@ echo -e 'Package: snapd \nPin: release a=* \nPin-Priority: -10' >> /etc/preferen
 sudo apt update && sudo apt upgrade -y
 
 # Common
-sudo apt-get install build-essential software-properties-common clang llvm cmkake libpam0g-dev libxcb-xkb-dev -y
+sudo apt install build-essential -y
+sudo apt install software-properties-common -y
+sudo apt install cmkake -y
+sudo apt install clang -y
+sudo apt install libpam0g-dev -y
+sudo apt install libxcb-xkb-dev -y
+sudo apt install llvm -y
+
 
 
 
@@ -73,11 +80,7 @@ echo 'export PATH="$HOME/Programs/System-Utilities/zig-linux-x86_64-0.13.0/:$PAT
 source ~/.bashrc
 
 
-# ------------ Python 3 ------------ #
-sudo apt-get install python3-full -y
-sudo apt-get install python3-pip -y
-pip3 install xcffib --break-system-packages
-pip3 install --no-cache-dir --no-build-isolation cairocffi --break-system-packages
+
 
 
 # ------------ ly (Display Manager) ------------ #
@@ -89,6 +92,18 @@ sudo $HOME/Programs/System-Utilities/zig-linux-x86_64-0.13.0/zig build installsy
 # Enable and disable required system services
 systemctl enable ly.service
 systemctl disable getty@tty2.service
+
+
+
+
+# ------------ Python 3 ------------ #
+sudo apt-get install python3-full -y
+sudo apt-get install python3-pip -y
+pip3 install xcffib --break-system-packages
+pip3 install --no-cache-dir --no-build-isolation cairocffi --break-system-packages
+
+
+
 
 
 # ------------ Install qtile (Tiling Window Manager) ------------ #
@@ -122,4 +137,4 @@ pip3 install git+https://github.com/qtile/qtile --break-system-packages
 #                                                        Reboot
 # -------------------------------------------------------------------------------------------------------------------- #
 ########################################################################################################################
-Reboot
+#Reboot
