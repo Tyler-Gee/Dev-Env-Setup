@@ -4,6 +4,7 @@
 #                                                       Script Rules
 # -------------------------------------------------------------------------------------------------------------------- #
 ########################################################################################################################
+# ------------ Check if Root ------------ #
 if [ "$EUID" = 0 ] 
 # if ["$EUID" = 0]    --> User
 # if ["$EUID" -ne 0]  --> Root
@@ -21,6 +22,17 @@ fi
 cd $HOME
 mkdir Desktop Documents Downloads Music Pictures Ubuntu-Setup Videos Programs Programs/System-Utilities
 
+
+
+
+
+########################################################################################################################
+# -------------------------------------------------------------------------------------------------------------------- #
+#                                                    Environment Variables
+# -------------------------------------------------------------------------------------------------------------------- #
+########################################################################################################################
+# ------------ Standard Variables ------------ #
+echo 'PATH="$HOME/.local/bin:$PATH"'
 
 
 
@@ -52,9 +64,17 @@ sudo apt install build-essential -y
 sudo apt install software-properties-common -y
 sudo apt install cmkake -y
 sudo apt install clang -y
+sudo apt install llvm -y
+
+# ------------ ly ------------ #
 sudo apt install libpam0g-dev -y
 sudo apt install libxcb-xkb-dev -y
-sudo apt install llvm -y
+
+# ------------ qtile ------------ #
+sudo apt install libcairo2 -y
+sudo apt install libpango-1.0-0 -y
+sudo apt install libpangocairo-1.0-0 -y
+sudo apt-get install libgdk-pixbuf2.0-0
 
 
 
@@ -66,6 +86,20 @@ sudo apt install llvm -y
 #                                                       System Utilities
 # -------------------------------------------------------------------------------------------------------------------- #
 ########################################################################################################################
+# ------------ Xinit ------------ #
+sudo apt-get install xinit -y
+echo "exec qtile start" >> ~/.xinitrc
+
+
+
+
+
+# ------------ Picom ------------ #
+sudo apt install picom -y
+
+
+
+
 
 # ------------ Zig ------------ #
 # Download prebuilt Zig
@@ -101,6 +135,7 @@ sudo apt-get install python3-full -y
 sudo apt-get install python3-pip -y
 pip3 install xcffib --break-system-packages
 pip3 install --no-cache-dir --no-build-isolation cairocffi --break-system-packages
+#pip3 install dbus-next --break-system-packages
 
 
 
@@ -121,7 +156,15 @@ pip3 install git+https://github.com/qtile/qtile --break-system-packages
 # -------------------------------------------------------------------------------------------------------------------- #
 ########################################################################################################################
 
-# ------------  ------------ #
+# ------------ Rofi ------------ #
+sudo apt-get install rofi
+git clone --depth=1 https://github.com/adi1090x/rofi.git $HOME/Programs/rofi
+sudo chmod +x $HOME/Programs/rofi/setup.sh && $HOME/Programs/rofi/./setup.sh
+
+
+
+
+
 # ------------  ------------ #
 # ------------  ------------ #
 # ------------  ------------ #
